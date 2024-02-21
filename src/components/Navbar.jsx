@@ -15,8 +15,8 @@ shopping_cart
             <li><Link to="/login">Login</Link></li>
             <li>
                <select>
-                  <option>{currentUser? currentUser.email: ''}</option>
-                  <option><Link to="/profile">My Profile</Link></option>
+                  <option value="">{currentUser? currentUser.email: ''}</option>
+                  <option value=""><Link to="/profile">My Profile</Link></option>
                </select>
             </li>
            

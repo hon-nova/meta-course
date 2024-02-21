@@ -1,7 +1,37 @@
 /* eslint-disable react/prop-types */
 
 // eslint-disable-next-line react/prop-types
-const ProductList = ({ products }) => {
+import {useState} from 'react'
+const ProductList = ({ products, callback }) => {
+
+   const [cartProducts, setCartProducts]=useState([])
+   
+   const handleAdd =(item)=>{     
+      
+      let tempCart=[...cartProducts]
+
+      let existingItemIndex = tempCart.findIndex((elem)=>elem.id===item.id)     
+
+      if(existingItemIndex===-1){
+         tempCart.push({...item,quantity:1})
+         setCartProducts(tempCart)
+         
+         // console.log('cart in main')
+         // console.log(tempCart)
+      } else {
+
+         tempCart[existingItemIndex].quantity++;
+         setCartProducts(tempCart);
+       
+         // console.log('cart in else')
+         // console.log(tempCart)
+      }     
+
+      if(callback){
+         callback(tempCart)
+      }
+   }
+
    return (
       <div className="products-container">
          <div className="left"></div>
@@ -32,7 +62,9 @@ const ProductList = ({ products }) => {
                            <p>In stock: {stock}</p>
                            <p><em>Category:</em> <span id="category">{category}</span></p>
                            <div id="btn-add">
-                              <button id="click-add">Add to Cart</button>
+                              <button 
+                              onClick={()=>{handleAdd(item)}}
+                              id="click-add">Add to Cart</button>
                            </div>
                           
                         </div>
