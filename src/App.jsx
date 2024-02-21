@@ -7,6 +7,10 @@ import Profile from './components/Profile'
 import Logout from './components/Logout'
 import {useState, useEffect} from 'react'
 import LoginUser from "./components/LoginUser";
+import Cart from './components/Cart'
+import ProductList from "./components/ProductList";
+import { useUser } from './UseContext'
+import Footer from "./components/Footer";
 
 function App() {
    const [appUsers, setAppUsers]=useState([])
@@ -24,6 +28,25 @@ function App() {
    },[])
    useEffect(()=>localStorage.setItem('appUsers',JSON.stringify(appUsers)),[appUsers])
    // localStorage.clear()
+
+   /**Products Part */
+   const [productsApp,setProductsApp]=useState([])
+   // const [cart,setCart]=useState([])
+  
+   const fetchProducts= async ()=>{
+     const response = await fetch('https://dummyjson.com/products')
+     const result = await response.json()
+     const dataReturn = result.products
+     console.log(dataReturn)
+     setProductsApp(dataReturn)
+   }
+  
+   useEffect(()=>{
+     fetchProducts()
+   },[])
+
+   let {setContextProducts}=useUser()
+   setContextProducts(productsApp)
    
    return (
       <Router basename="/meta-course">
@@ -34,8 +57,10 @@ function App() {
             <Route path="/profile" element={<Profile />}/>
             <Route path="/login" element={<LoginUser />}/>
             <Route path="/logout" element={<Logout />}/>
+            <Route path="/cart" element={<Cart />}/>
+            <Route path="/products" element={<ProductList products={productsApp}/>}/>
          </Routes>
-        
+        <Footer/>
       </Router>
    );
 }

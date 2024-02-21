@@ -103,7 +103,7 @@ const RegisterUser = ({callback}) => {
          setMessage((mObject)=>({...mObject,success:''}))
          setFormInput
          navigateTo('/login')
-      }
+      }  
      
       ,1000)
    };

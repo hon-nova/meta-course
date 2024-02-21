@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { useUser} from "../UseContext";
 import bcrypt from 'bcryptjs'
 
@@ -13,6 +13,8 @@ const LoginUser = () => {
       success: "",
    });
    const {currentUser,setCurrentUser}=useUser()
+
+   const navigateTo = useNavigate()
 
    const handleInputChange = (e) => {
       let { value, name } = e.target;
@@ -45,7 +47,7 @@ const LoginUser = () => {
                console.log("Logged in successfully.");
                setMessage((mObj) => ({
                   ...mObj,
-                  success: "Logged in successfully.",
+                  success: "Success.",
                }));
                setCurrentUser(foundUser.newUser)
                console.log('currentUser:::',currentUser)
@@ -56,7 +58,7 @@ const LoginUser = () => {
                })
                setTimeout(() => {
                   setMessage((mObj) => ({ ...mObj, success: "" }));
-   
+                  navigateTo('/products')
                }, 2000);
             } else {
                console.log("Incorrect Password. Try again.");
