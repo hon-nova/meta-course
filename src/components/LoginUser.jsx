@@ -1,0 +1,108 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useUser} from "../UseContext";
+
+const LoginUser = () => {
+   const [formLogin, setFormLogin] = useState({
+      email: "",
+      password: "",
+   });
+   const [message, setMessage] = useState({
+      error: "",
+      success: "",
+   });
+   const {currentUser,setCurrentUser}=useUser()
+
+   const handleInputChange = (e) => {
+      let { value, name } = e.target;
+      // console.log('form login value, name:::',value, name)
+      setFormLogin((formObject) => ({ ...formObject, [name]: value }));
+   };
+   const hanldeSubmitLogin = (e) => {
+      e.preventDefault();
+      
+      const { email, password } = formLogin;
+      if(email===''|| password===''){
+         console.log('All fields are required.')
+         setMessage((mObj)=>({...mObj,error:"Errors! All fields are required."}))
+
+         setTimeout(()=> setMessage((mObj)=>({...mObj,error:""})),3000)
+      }
+
+      const localUsers = JSON.parse(localStorage.getItem("appUsers"));
+      console.log('localUsers array:::',localUsers)
+      if (localUsers) {
+         //use PK as email first
+         const foundUser = localUsers.find((user)=>user.newUser.email===email)
+         console.log('foundUser::',foundUser)
+
+         if (foundUser){
+            if (foundUser.newUser.password === password) {
+               console.log("Logged in successfully.");
+               setMessage((mObj) => ({
+                  ...mObj,
+                  success: "Logged in successfully.",
+               }));
+               setCurrentUser(foundUser.newUser)
+               console.log('currentUser:::',currentUser)
+               setTimeout(() => {
+                  setMessage((mObj) => ({ ...mObj, success: "" }));
+   
+               }, 2000);
+            } else {
+               console.log("Incorrect Password. Try again.");
+               setMessage((mObj) => ({
+                  ...mObj,
+                  error: "Incorrect Password. Try again.",
+               }));
+               setTimeout(() => {
+                  setMessage((mObj) => ({ ...mObj, error: "" }));
+   
+               }, 2000);
+            }
+         
+         } else {
+               console.log("NOT FOUND 404");
+               setMessage((mObj) => ({ ...mObj, error: "NOT FOUND 404" }));
+
+               setTimeout(() => setMessage((mObj) => ({ ...mObj, error: "" })), 2000);
+         }
+      }
+   };
+
+   return (
+      <div>
+      {message.error && <p className="error">{message.error}</p>}
+      {message.success && <p className="success">{message.success}</p>}
+         <div className="login">
+            <form onSubmit={hanldeSubmitLogin}>
+               Enter email:{" "}
+               <input
+                  type="email"
+                  name="email"
+                  value={formLogin.email}
+                  onChange={handleInputChange}
+               />
+               <br />
+               Enter password:{" "}
+               <input
+                  type="password"
+                  name="password"
+                  value={formLogin.password}
+                  onChange={handleInputChange}
+               />
+               <br />
+               <button type="submit">Login</button>
+            </form>
+         </div>
+
+         <div className="register">
+            <p>
+               Haven&apos;t got an account yet? Register{" "}
+               <Link to="/register">here...</Link>
+            </p>
+         </div>
+      </div>
+   );
+};
+export default LoginUser;

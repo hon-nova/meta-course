@@ -1,13 +1,13 @@
 import {useUser} from '../UseContext'
 const LoggedInUser = ()=>{
 
-   const {user}=useUser()
+   const {currentUser}=useUser()
+   console.log('currentUser::',currentUser)
 
    return (
       <div className="user-login">
-          <h1>Hello {user.name}</h1>
+          <h1>Hello {currentUser? currentUser.username : 'Guest' }</h1>
       </div>
-     
    )
 }
 export default LoggedInUser

@@ -6,14 +6,11 @@ const UserContext = createContext(undefined)
 export const UserProvider = ({children})=>{
    //which variables you want?
 
-   const [user,setUser]=useState({
-      name: 'hon',
-      email: 'hon@vancouver.ca',
-      dob: '01/01/2024'
-   })
+   const [currentUser,setCurrentUser]=useState(null)
+   
 
    
-   return <UserContext.Provider value={{user,setUser}}>{children}</UserContext.Provider>
+   return <UserContext.Provider value={{currentUser,setCurrentUser}}>{children}</UserContext.Provider>
 }
 
 export const useUser=()=>useContext(UserContext)

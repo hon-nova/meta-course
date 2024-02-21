@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 
 const RegisterUser = ({callback}) => {
    const [formInput, setFormInput] = useState({
@@ -7,7 +8,7 @@ const RegisterUser = ({callback}) => {
       password: "",
       confirm_password: "",
    });
-   const [registeredUsers, setRegisteredusers] = useState([]);
+   // const [registeredUsers, setRegisteredusers] = useState([]);
 
    const [message, setMessage] = useState({
       error: "",
@@ -79,13 +80,10 @@ const RegisterUser = ({callback}) => {
       if(!isValidPassword(password)){
          return;
       }
-      setRegisteredusers((prevState) => [
-         ...prevState,
-         { username, email, password },
-      ]);
-
+     
+      let newUser={username,email,password}
       if(callback){
-         callback({registeredUsers})
+         callback({newUser})
       }
       setMessage((mObject) => ({
          ...mObject,
@@ -102,7 +100,7 @@ const RegisterUser = ({callback}) => {
          confirm_password: "",})
     
    };
-   useEffect(() => console.log(registeredUsers), [registeredUsers]);
+   // useEffect(() => console.log(registeredUsers), [registeredUsers]);
    return (
       <div className="register-main">
          {message.success && <p className="success">{message.success}</p>}
