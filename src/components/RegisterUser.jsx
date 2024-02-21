@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const RegisterUser = () => {
+const RegisterUser = ({callback}) => {
    const [formInput, setFormInput] = useState({
       username: "",
       email: "",
@@ -16,7 +16,7 @@ const RegisterUser = () => {
 
    const handleInputChange = (e) => {
       let { name, value } = e.target;
-      console.log("name - value:::", name, value);
+      // console.log("name - value:::", name, value);
 
       setFormInput((thisFormInputObject) => ({
          ...thisFormInputObject,
@@ -60,9 +60,7 @@ const RegisterUser = () => {
          }))
          setTimeout(
             () =>setMessage(''),2000
-         );
-
-         // setMessage()
+         )
          return;
       }
       if (password !== confirm_password) {
@@ -85,22 +83,24 @@ const RegisterUser = () => {
          ...prevState,
          { username, email, password },
       ]);
+
+      if(callback){
+         callback({registeredUsers})
+      }
       setMessage((mObject) => ({
          ...mObject,
          success: "Successfully registered.",
       }))
+      setTimeout(()=>
+      setMessage((mObject)=>({...mObject,success:''}))
+      ,1000)
       
       setFormInput({ 
          username: "",
          email: "",
          password: "",
          confirm_password: "",})
-
-      setTimeout(()=>
-         setMessage((mObject)=>({...mObject,success:''}))
-         ,1000)
-     
-     
+    
    };
    useEffect(() => console.log(registeredUsers), [registeredUsers]);
    return (

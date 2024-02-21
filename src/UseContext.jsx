@@ -12,6 +12,7 @@ export const UserProvider = ({children})=>{
       dob: '01/01/2024'
    })
 
+   
    return <UserContext.Provider value={{user,setUser}}>{children}</UserContext.Provider>
 }
 
