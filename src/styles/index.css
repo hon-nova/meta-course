@@ -38,4 +38,31 @@ body, html {
   justify-content: end;
 }
 
+/* Navbar */
+ul {
+  list-style: none;
+  display: flex;
+  justify-content: end;
+}
+ul li {
+  margin: 10px;
+}
+ul li a {
+  text-decoration: none;
+  font-size: 25px;
+}
+
+/* RegisterUser */
+.error {
+  color: rgb(248, 63, 63);
+  font-size: 25px;
+  background-color: rgb(245, 214, 214);
+}
+
+.success {
+  color: green;
+  font-size: 25px;
+  background-color: rgb(234, 247, 216);
+}
+
 /*# sourceMappingURL=index.css.map */
