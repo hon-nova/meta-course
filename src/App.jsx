@@ -1,34 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+// import { useState } from 'react'
+
 import './App.css'
+import {useUser} from './UseContext'
+
+const LoggedInUser = ()=>{
+
+   const {user}=useUser()
+   console.log('user in Logged::',user)
+
+   return (
+      <h1>Hello {user ? user.name : 'Guest'}</h1>
+   )
+}
+const Header =()=>{
+   return (
+      <div>  
+      <h2>Blog Post</h2>
+      <LoggedInUser />
+      </div>
+   )
+}
+const Page = ()=>{
+
+  return(
+    <div>
+    <h4>Blog content</h4>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, velit alias deleniti perspiciatis praesentium cupiditate recusandae vitae id ad atque culpa hic molestiae sapiente, cumque, reiciendis nisi quia laudantium! Accusamus.
+      Quis odio odit officia magnam tempora accusamus! Necessitatibus accusantium magni sapiente nisi nostrum totam neque commodi? In repellendus, corrupti, beatae laudantium nesciunt esse iusto architecto animi doloremque, consequuntur eaque aut?
+      Aut, autem! Commodi non placeat quia fugit velit quibusdam praesentium molestias voluptas dolorem vero labore ea est illum itaque animi, perspiciatis cum blanditiis officia deserunt? Veritatis iure libero ipsum eveniet.
+      Iure praesentium dicta, obcaecati facilis doloribus id sapiente, atque, nam deleniti ipsum molestias. Pariatur corporis reiciendis excepturi fugiat consequatur, tenetur suscipit asperiores exercitationem praesentium, similique nobis ab doloremque, iste repellendus.</p>
+    </div>
+  )
+}
+
 
 function App() {
-  const [count, setCount] = useState(0)
-
+ 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+   <div> 
+      <h1>Blog Post</h1>
+      <Header /> 
+      <Page />
+   </div>
   )
 }
 
