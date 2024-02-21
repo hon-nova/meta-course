@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
 
 // eslint-disable-next-line react/prop-types
-import {useState} from 'react'
-const ProductList = ({ products, callback }) => {
+import {useState, useEffect} from 'react'
+const ProductList = ({ products, callback,callback2 }) => {
 
    const [cartProducts, setCartProducts]=useState([])
    const [message,setMessage]=useState('')
+   const [quantityP,setQuantityP]=useState(0)
    
    const handleAdd =(item)=>{     
       setMessage("Item added.")
@@ -32,7 +33,14 @@ const ProductList = ({ products, callback }) => {
       if(callback){
          callback(tempCart)
       }
+      if(callback2){
+         callback2(quantityP)
+      }
    }
+   useEffect(()=>{
+      let itemCartCount=cartProducts.reduce((total,{quantity})=>total+quantity,1)
+      setQuantityP(itemCartCount)
+   },[cartProducts])
 
    return (
       <div className="top">

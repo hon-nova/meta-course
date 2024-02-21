@@ -1,7 +1,13 @@
+/* eslint-disable react/prop-types */
 import {Link} from 'react-router-dom'
 import { useUser} from '../UseContext'
-const Navbar = ()=>{
+import {useState} from 'react'
+
+
+const Navbar = ({totalItems})=>{
    const {currentUser}=useUser()
+  const [len,setLen]=useState(totalItems)
+  console.log('len::',len)
    return(
       <div>
          <nav>
@@ -10,7 +16,7 @@ const Navbar = ()=>{
             <li><Link to="/products">Products</Link></li>
             <li><Link to="/cart"><span className="material-symbols-outlined">
 shopping_cart
-</span></Link></li>
+</span>{totalItems? (<sup>{len ? len: ''}</sup>) :''}</Link></li>
 
             <li><Link to="/login">Login</Link></li>
             <li>
