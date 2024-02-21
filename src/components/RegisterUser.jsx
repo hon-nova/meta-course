@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// passwordHash = require('password-hash')
+import { v4 as uuid } from 'uuid';
+
 import bcrypt from 'bcryptjs';
 const RegisterUser = ({callback}) => {
    const [formInput, setFormInput] = useState({
@@ -9,8 +10,7 @@ const RegisterUser = ({callback}) => {
       email: "",
       password: "",
       confirm_password: "",
-   });
-   // const [registeredUsers, setRegisteredusers] = useState([]);
+   }); 
 
    const [message, setMessage] = useState({
       error: "",
@@ -21,8 +21,7 @@ const RegisterUser = ({callback}) => {
    const saltV=10
 
    const handleInputChange = (e) => {
-      let { name, value } = e.target;
-      // console.log("name - value:::", name, value);
+      let { name, value } = e.target;     
 
       setFormInput((thisFormInputObject) => ({
          ...thisFormInputObject,
@@ -81,16 +80,12 @@ const RegisterUser = ({callback}) => {
       if(!isValidPassword(password)){
          return;
       }
-      // passwordHash = require('password-hash')
-      // const hashedPassword=generate(password)
-      // console.log("is password hashed::",isHashed(password))
-     
 
       const hashedPassword=await bcrypt.hash(password,saltV)
 
       console.log('passwordH:::',hashedPassword)
-      
-      let newUser={username,email,password:hashedPassword}
+
+      let newUser={id: uuid(),username,email,password:hashedPassword}
       if(callback){
          callback({newUser})
       }
@@ -112,7 +107,7 @@ const RegisterUser = ({callback}) => {
      
       ,1000)
    };
-   // useEffect(() => console.log(registeredUsers), [registeredUsers]);
+  
    return (
       <div className="register-main">
          {message.success && <p className="success">{message.success}</p>}

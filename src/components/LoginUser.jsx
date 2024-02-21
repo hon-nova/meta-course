@@ -16,7 +16,7 @@ const LoginUser = () => {
 
    const handleInputChange = (e) => {
       let { value, name } = e.target;
-      // console.log('form login value, name:::',value, name)
+     
       setFormLogin((formObject) => ({ ...formObject, [name]: value }));
    };
    const hanldeSubmitLogin = async(e) => {
@@ -33,7 +33,7 @@ const LoginUser = () => {
       const localUsers = JSON.parse(localStorage.getItem("appUsers"));
       console.log('localUsers array:::',localUsers)
       if (localUsers) {
-         //use PK as email first
+         //use PK as email
          const foundUser = localUsers.find((user)=>user.newUser.email===email)
          console.log('foundUser::',foundUser)
 
