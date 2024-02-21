@@ -1,16 +1,56 @@
 /* eslint-disable react/prop-types */
+import {useState} from 'react'
 const Cart = ({cart})=>{
 
+   const [myCart,setMyCart]=useState(cart||[])
+   const [message,setMessage]=useState('')
    console.log('cart in Cart:::',cart)
-   const onDecrease = ()=>{
+   const onDecrease = (item)=>{
+      const foundItemIndex =myCart.findIndex((elem)=>elem.id===item.id)
+      console.log('foundItem::',foundItemIndex)
+      // console.log('foundItem quantity:::',)
+      if(foundItemIndex!==-1){
+         let tempCart=[...myCart]
+         if( tempCart[foundItemIndex].quantity>0){
+            tempCart[foundItemIndex].quantity--
+         }
 
+         if(tempCart[foundItemIndex].quantity===0){
+            tempCart.splice(foundItemIndex,1)
+         }
+
+         setMyCart(tempCart)
+      }
    }
-   const onIncrease = ()=>{
-      
+
+   const onIncrease = (item)=>{
+      let foundItemIndex=myCart.findIndex((elem)=>elem.id===item.id)
+      if(foundItemIndex!==-1){
+         
+         let tempCart=[...myCart]
+         if(tempCart[foundItemIndex].quantity<10){
+            tempCart[foundItemIndex].quantity++
+         }
+
+         if(tempCart[foundItemIndex].quantity===10){
+            setMessage("Limit: 10")
+            setTimeout(()=>setMessage(''),5000)
+         }
+
+         setMyCart(tempCart)
+      }
+   }
+
+   const onRemove = (index)=>{
+      let tempCart=[...myCart]
+      tempCart.splice(index,1)
+      // alert('item deleted')
+      setMyCart(tempCart)
    }
    return (
       <div className="cart">
-         <div className="cart-center"> <table>
+      {message && <p className='error'>{message}</p>}
+         <div className="cart-center"><table>
                <thead>
                   <tr>
                      <th>id</th>
@@ -23,7 +63,7 @@ const Cart = ({cart})=>{
                   </tr>
                </thead>
                <tbody>
-               {cart.length>0&& cart.map((item,index)=>(
+               {myCart.length>0&& myCart.map((item,index)=>(
                   <tr key={index}>
                      <td>{item.id}</td>
                      <td><img src={item.thumbnail} alt="logo" id="photo"/></td>
@@ -32,19 +72,19 @@ const Cart = ({cart})=>{
                      <td>${item.price}</td>
                      <td>
                         <div>
-                           <button id="q-decrease" onClick={onDecrease}>-</button>
+                           <button id="q-decrease" onClick={()=>{onDecrease(item)}}>-</button>
                            <input type="text" id="quantity" name="quantity"  value={item.quantity}
                            />
-                           <button id="q-increase" onClick={onIncrease}>+</button>
+                           <button id="q-increase" onClick={()=>{onIncrease(item)}}>+</button>
                         </div>
                      </td>
                      <td>$$$</td>
                      <td>
-                     <button id="delete">
-                           <span className="material-symbols-outlined">
-                              delete
-                           </span> Remove All
-                           </button>
+                     <button id="delete" onClick={()=>{onRemove(index)}}>
+                        <span className="material-symbols-outlined">
+                           delete
+                        </span> Remove All
+                     </button>
                      </td>
                   </tr>
             ))}
