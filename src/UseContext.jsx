@@ -8,8 +8,9 @@ export const UserProvider = ({children})=>{
 
    const [currentUser,setCurrentUser]=useState(null)
    const [contextProducts, setContextProducts]=useState([])
+   const [cartItems,setCartItems]=useState([])
    
-   return <UserContext.Provider value={{currentUser,setCurrentUser,contextProducts,setContextProducts}}>{children}</UserContext.Provider>
+   return <UserContext.Provider value={{currentUser,setCurrentUser,contextProducts,setContextProducts,cartItems,setCartItems}}>{children}</UserContext.Provider>
 }
 
 export const useUser=()=>useContext(UserContext)
