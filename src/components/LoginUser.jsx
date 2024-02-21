@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useUser} from "../UseContext";
+import bcrypt from 'bcryptjs'
 
 const LoginUser = () => {
    const [formLogin, setFormLogin] = useState({
@@ -18,7 +19,7 @@ const LoginUser = () => {
       // console.log('form login value, name:::',value, name)
       setFormLogin((formObject) => ({ ...formObject, [name]: value }));
    };
-   const hanldeSubmitLogin = (e) => {
+   const hanldeSubmitLogin = async(e) => {
       e.preventDefault();
       
       const { email, password } = formLogin;
@@ -37,7 +38,10 @@ const LoginUser = () => {
          console.log('foundUser::',foundUser)
 
          if (foundUser){
-            if (foundUser.newUser.password === password) {
+            let matchedPs=await bcrypt.compare(password, foundUser.newUser.password)
+            console.log('matchedPs:::',matchedPs)
+            if(matchedPs){
+            
                console.log("Logged in successfully.");
                setMessage((mObj) => ({
                   ...mObj,
@@ -45,6 +49,11 @@ const LoginUser = () => {
                }));
                setCurrentUser(foundUser.newUser)
                console.log('currentUser:::',currentUser)
+
+               setFormLogin({
+                  email:'',
+                  password:''
+               })
                setTimeout(() => {
                   setMessage((mObj) => ({ ...mObj, success: "" }));
    

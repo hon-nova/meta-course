@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
+// passwordHash = require('password-hash')
+import bcrypt from 'bcryptjs';
 const RegisterUser = ({callback}) => {
    const [formInput, setFormInput] = useState({
       username: "",
@@ -14,6 +16,9 @@ const RegisterUser = ({callback}) => {
       error: "",
       success: "",
    });
+   const navigateTo=useNavigate()
+
+   const saltV=10
 
    const handleInputChange = (e) => {
       let { name, value } = e.target;
@@ -24,10 +29,10 @@ const RegisterUser = ({callback}) => {
          [name]: value,
       }));
    };
-   const handleSubmit = (e) => {
+   const handleSubmit = async(e) => {
       e.preventDefault();
       setFormInput({});
-      const { username, email, password, confirm_password } = formInput;
+      let { username, email, password, confirm_password } = formInput;
       const isValidPassword=(pwd)=>{
          const pattern=/[a-zA-Z0-9!#$%&*]/g
          if(pwd.length<8){
@@ -41,11 +46,7 @@ const RegisterUser = ({callback}) => {
             setTimeout(()=> setMessage((mObject)=>({...mObject,error:''})),5000)
             return false
          }
-         if(pwd.length<8){
-            setMessage((mObject)=>({...mObject,error:"Password is not strong. Please try again."}))
-            setTimeout(()=>setMessage((mObject=>({...mObject,error:''}))),2000)
-            return false
-         }
+        
          return true;
       }
 
@@ -80,8 +81,16 @@ const RegisterUser = ({callback}) => {
       if(!isValidPassword(password)){
          return;
       }
+      // passwordHash = require('password-hash')
+      // const hashedPassword=generate(password)
+      // console.log("is password hashed::",isHashed(password))
      
-      let newUser={username,email,password}
+
+      const hashedPassword=await bcrypt.hash(password,saltV)
+
+      console.log('passwordH:::',hashedPassword)
+      
+      let newUser={username,email,password:hashedPassword}
       if(callback){
          callback({newUser})
       }
@@ -89,16 +98,19 @@ const RegisterUser = ({callback}) => {
          ...mObject,
          success: "Successfully registered.",
       }))
-      setTimeout(()=>
-      setMessage((mObject)=>({...mObject,success:''}))
+      setFormInput({  
+      username: "",
+      email: "",
+      password: "",
+      confirm_password: "",})
+
+      setTimeout(()=>{
+         setMessage((mObject)=>({...mObject,success:''}))
+         setFormInput
+         navigateTo('/login')
+      }
+     
       ,1000)
-      
-      setFormInput({ 
-         username: "",
-         email: "",
-         password: "",
-         confirm_password: "",})
-    
    };
    // useEffect(() => console.log(registeredUsers), [registeredUsers]);
    return (
