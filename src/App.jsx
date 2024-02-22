@@ -11,11 +11,12 @@ import Cart from './components/Cart'
 import ProductList from "./components/ProductList";
 import { useUser } from './UseContext'
 import Footer from "./components/Footer";
+import ForgotPassword from "./components/ForgotPassword";
 
 function App() {
    const [appUsers, setAppUsers]=useState([])
    const [cartPassed,setCartPassed]=useState([])
-   const [totalItems, setTotalItems] = useState(0);
+   // const [totalItems, setTotalItems] = useState(0);
 
    const takeCart = (data)=>{
       setCartPassed(data)
@@ -41,8 +42,7 @@ function App() {
 
    /**Products Part */
    const [productsApp,setProductsApp]=useState([])
-   // const [cart,setCart]=useState([])
-  
+   
    const fetchProducts= async ()=>{
      const response = await fetch('https://dummyjson.com/products')
      const result = await response.json()
@@ -55,16 +55,15 @@ function App() {
      fetchProducts()
    },[])
 
-   let {setContextProducts}=useUser()
+   let {setContextProducts,setCartItems}=useUser()
    setContextProducts(productsApp)
+   setCartItems(cartPassed)
    /**cartProducts */
    
-   const takeQuantity =(data)=>{
-      setTotalItems(data)
-   }
+   
    return (
       <Router basename="/meta-course">
-         <Navbar totalItems={totalItems}/>
+         <Navbar/>
          
          <Routes>
          <Route path="/" element={<Header/>}/>
@@ -72,8 +71,9 @@ function App() {
             <Route path="/profile" element={<Profile />}/>
             <Route path="/login" element={<LoginUser />}/>
             <Route path="/logout" element={<Logout />}/>
-            <Route path="/cart" element={<Cart cart={cartPassed} totalItems={totalItems} />}/>
-            <Route path="/products" element={<ProductList products={productsApp} callback={takeCart} callback2={takeQuantity}/>}/>
+            <Route path="/cart" element={<Cart cart={cartPassed} />}/>
+            <Route path="/products" element={<ProductList products={productsApp} callback={takeCart}/>}/>
+            <Route path='/forgot-password' element={<ForgotPassword/>}/>
          </Routes>
         <Footer/>
       </Router>

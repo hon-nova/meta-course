@@ -1,14 +1,31 @@
 /* eslint-disable react/prop-types */
 
 // eslint-disable-next-line react/prop-types
-import {useState, useEffect} from 'react'
-const ProductList = ({ products, callback,callback2 }) => {
+
+import {useState,useEffect} from 'react'
+import {useUser} from '../UseContext'
+const ProductList = ({ products, callback}) => {
 
    const [cartProducts, setCartProducts]=useState([])
-   const [message,setMessage]=useState('')
-   const [quantityP,setQuantityP]=useState(0)
+   const [message,setMessage]=useState({
+      success:'',
+      warning:''
+   })
+ 
+   const {currentUser,setCartItems,cartItems}=useUser()
    
    const handleAdd =(item)=>{     
+
+   /*  if(!currentUser){
+
+         setMessage((mObj)=>({...mObj,warning: "Please log in to save your items."}))
+         setTimeout(() => {
+            setMessage((mObj)=>({...mObj,warning: ""}))
+         }, 3000);
+
+         return;
+      }*/
+
       setMessage("Item added.")
       setTimeout(()=>setMessage(''),3000)
       let tempCart=[...cartProducts]
@@ -18,35 +35,27 @@ const ProductList = ({ products, callback,callback2 }) => {
       if(existingItemIndex===-1){
          tempCart.push({...item,quantity:1})
          setCartProducts(tempCart)
+         setCartItems(tempCart)
 
-         // console.log('cart in main')
-         // console.log(tempCart)
       } else {
 
          tempCart[existingItemIndex].quantity++;
          setCartProducts(tempCart);
+         setCartItems(tempCart)
        
-         // console.log('cart in else')
-         // console.log(tempCart)
-      }     
-
+      } 
       if(callback){
          callback(tempCart)
       }
-      if(callback2){
-         callback2(quantityP)
-      }
    }
-   useEffect(()=>{
-      let itemCartCount=cartProducts.reduce((total,{quantity})=>total+quantity,1)
-      setQuantityP(itemCartCount)
-   },[cartProducts])
+   useEffect(()=>setCartItems(cartItems),[cartItems])
 
    return (
       <div className="top">
-      {message && <p className='success'>{message}</p>}
+      {message.success && <p className='success'>{message.success}</p>}
+      {message.warning && <p className='warning'>{message.warning}</p>}
   <div className="products-container">
-       
+
          <div className="left"></div>
        
          <div className="products">
@@ -65,10 +74,8 @@ const ProductList = ({ products, callback,callback2 }) => {
                   } = item;
                   return (
                     
-                     <li key={id}>
-                   
-                        <div className="product-card">
-                       
+                     <li key={id}>                   
+                        <div className="product-card">                       
                         <p>
                               <img src={thumbnail} alt="product" id="product-img"/>
                            </p>
@@ -94,10 +101,8 @@ const ProductList = ({ products, callback,callback2 }) => {
       </div>
 <div className="products-container">
        
-       <div className="left"></div>
-     
-       <div className="products">
-    
+       <div className="left"></div>     
+       <div className="products">    
           {products &&
              products.map((item) => {
                 let {
@@ -110,12 +115,9 @@ const ProductList = ({ products, callback,callback2 }) => {
                    category,
                    thumbnail,
                 } = item;
-                return (
-                  
-                   <li key={id}>
-                 
-                      <div className="product-card">
-                     
+                return (                  
+                   <li key={id}>                 
+                      <div className="product-card">                     
                       <p>
                             <img src={thumbnail} alt="product" id="product-img"/>
                          </p>

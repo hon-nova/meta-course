@@ -1,7 +1,9 @@
 /* eslint-disable react/prop-types */
 import {useUser} from '../UseContext'
 import { useState, useEffect } from "react";
-const Cart = ({ cart,totalItems}) => {
+
+
+const Cart = ({cart}) => {
    const [myCart, setMyCart] = useState(cart || []);
    const [message, setMessage] = useState("");
    // const [items, setItems] = useState(totalItems);
@@ -49,11 +51,7 @@ const Cart = ({ cart,totalItems}) => {
       // alert('item deleted')
       setMyCart(tempCart);
    };
-   useEffect(()=>{
-      // let itemCount = myCart.reduce((total, { quantity }) => total + quantity, 0);
-      // console.log('itemCount::',itemCount)
-      // setItems(itemCount)
-   },[myCart])
+ 
    useEffect(()=>{
       setCartItems(myCart)
    },[myCart])

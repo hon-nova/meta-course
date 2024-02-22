@@ -103,7 +103,10 @@ const LoginUser = () => {
                   onChange={handleInputChange}
                />
                <br />
+               <div id="login-forgot-pwd">
                <button type="submit">Login</button>
+               <Link to='/forgot-password'>Forgot Password? </Link>
+               </div>
             </form>
          </div>
 

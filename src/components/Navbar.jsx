@@ -3,22 +3,18 @@ import { Link } from "react-router-dom";
 import { useUser } from "../UseContext";
 import { useState, useEffect } from "react";
 
-const Navbar = ({ totalItems }) => {
-   const { currentUser, cartItems } = useUser();
-   const [len, setLen] = useState(totalItems);
+const Navbar = () => {
+   const { currentUser, cartItems,setCartItems } = useUser();
+   const [len, setLen] = useState(0);
 
    useEffect(() => {
-      setLen(totalItems);
-   }, [totalItems]);
-
-   useEffect(() => {
-      let itemCount = cartItems.reduce(
-         (total, { quantity }) => total + quantity,
-         0
-      );
+      let itemCount=cartItems.reduce(((total,{quantity})=>total+quantity),0)
       setLen(itemCount);
-   }, [cartItems]);
-   console.log("len::", len);
+      setCartItems(cartItems)
+      console.log("len::", len);
+   }, [cartItems,len,setLen]);
+
+  
    return (
       <div>
          <nav>
@@ -34,7 +30,7 @@ const Navbar = ({ totalItems }) => {
                      <span className="material-symbols-outlined">
                         shopping_cart
                      </span>
-                     {totalItems ? <sup>{len}</sup> : ""}
+                     {len ? <sup>{len}</sup> : ""}
                   </Link>
                </li>
 

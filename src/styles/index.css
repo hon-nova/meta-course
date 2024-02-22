@@ -70,6 +70,13 @@ ul li a {
   background-color: rgb(234, 247, 216);
 }
 
+.warning {
+  color: goldenrod;
+  font-size: 25px;
+  background-color: rgb(241, 238, 203);
+  font-weight: bolder;
+}
+
 /* ProductList */
 .top {
   margin: 50px 0;
@@ -177,6 +184,11 @@ td {
 
 #delete:hover {
   background-color: red;
+}
+
+/* <ForgotPassword/> */
+#login-forgot-pwd {
+  display: flex;
 }
 
 /*# sourceMappingURL=index.css.map */
