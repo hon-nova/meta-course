@@ -55,9 +55,10 @@ function App() {
      fetchProducts()
    },[])
 
-   let {setContextProducts,setCartItems}=useUser()
+   let {setContextProducts,setCartItems,cartItems}=useUser()
    setContextProducts(productsApp)
-   setCartItems(cartPassed)
+   useEffect(()=>setCartItems(cartItems),[cartItems])
+   
    /**cartProducts */
    
    return (
