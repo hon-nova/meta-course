@@ -1,8 +1,9 @@
 import {useState} from 'react'
 import { useNavigate } from 'react-router-dom';
+import bcrypt from 'bcryptjs'
+
 const ForgotPassword = () => {
-
-
+   
 const [forgotPwdForm,setForgotPwdForm]=useState({
    email:'',
    password:'',
@@ -14,6 +15,7 @@ const [message,setMessage]=useState({
 })
 
 const navigateTo =useNavigate()
+const saltV =10
 
 const handleInputChange =(e)=>{
    let {value,name}= e.target
@@ -23,20 +25,38 @@ const handleInputChange =(e)=>{
    }))
 }
 
-const handleSubmitForgotPassword =(e)=>{
+const handleSubmitForgotPassword =async(e)=>{
    e.preventDefault()
    //validation here...
    const {email,password, confirm_password}=forgotPwdForm
+//use lookahead assertions
+   // let pattern=/[a-zA-Z0-9!@#$%&*]/g
 
-   let pattern=/[a-zA-Z0-9!@#$%&*]/g
-
-   const isPasswordValid = (pwd)=>{
-      if(pattern.test(pwd)===true){
-         return true
-      } else {
-         return false
+   const isPasswordValid = (pwd) => {
+      const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+   
+      if (pwd.length < 8) {
+         setMessage((mObject) => ({
+            ...mObject,
+            error: 'Password is weak.',
+         }));
+         setTimeout(() => setMessage((mObject) => ({ ...mObject, error: '' })), 2000);
+         return false;
       }
-   }
+   
+      if (!pattern.test(pwd)) {
+         setMessage((mObject) => ({
+            ...mObject,
+            error:
+               'Password must contain at least one lowercase letter, one uppercase letter, and one digit.',
+         }));
+         setTimeout(() => setMessage((mObject) => ({ ...mObject, error: '' })), 5000);
+         return false;
+      }
+   
+      return true;
+   };
+   
 
    if(email==='' || password===''||confirm_password===''){
       setMessage((prev)=>({...prev, error: 'Please fill out all required fields.'}))
@@ -45,16 +65,12 @@ const handleSubmitForgotPassword =(e)=>{
       return false
    }
 
-   if(!isPasswordValid(password)){
-
-      setMessage((prev)=>({...prev, error: 'Invalid Password. Password must contain lowercases, uppercase, numbers, special characters: !@#$%&*'}))
-
-      setTimeout(()=>setMessage((prev)=>({...prev, error: ''})),3000)
+   if(!isPasswordValid(password)){     
 
       return false;
 
    } else if(password!==confirm_password){
-      setMessage((prev)=>({...prev, error: 'Please fill out all required fields.'}))
+      setMessage((prev)=>({...prev, error: 'Passwords don\'t match.'}))
 
       setTimeout(()=>setMessage((prev)=>({...prev, error: ''})),3000)
       return false;
@@ -70,8 +86,11 @@ const handleSubmitForgotPassword =(e)=>{
    const foundUser = localUsers.find((user)=>user.newUser.email===email)
    console.log('foundUser::',foundUser)
    if(foundUser){
+      let hashedPassword=await bcrypt.hash(password,saltV)
 
-      setForgotPwdForm((prev)=>({...prev,password: password}))
+      console.log('passwordH:::',hashedPassword)
+
+      setForgotPwdForm((prev)=>({...prev,password: hashedPassword}))
 
       setMessage((prev)=>({...prev,success:'Password Updated'}))
       setTimeout(() => {

@@ -32,22 +32,31 @@ const RegisterUser = ({callback}) => {
       e.preventDefault();
       setFormInput({});
       let { username, email, password, confirm_password } = formInput;
-      const isValidPassword=(pwd)=>{
-         const pattern=/[a-zA-Z0-9!#$%&*]/g
-         if(pwd.length<8){
-            setMessage((mObject)=>({...mObject,error:'Password is not strong.'}))
-            setTimeout(()=> setMessage((mObject)=>({...mObject,error:''})),2000)
-            return false
+      const isPasswordValid = (pwd) => {
+         const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+      
+         if (pwd.length < 8) {
+            setMessage((mObject) => ({
+               ...mObject,
+               error: 'Password is weak. It must be at least 8 characters long.',
+            }));
+            setTimeout(() => setMessage((mObject) => ({ ...mObject, error: '' })), 2000);
+            return false;
          }
-         if(pattern.test(pwd)===false){
-            setMessage((mObject)=>({...mObject,error:'Password must contain lowercase letters, uppercase letters, and special characters !#$%&*'}))
-
-            setTimeout(()=> setMessage((mObject)=>({...mObject,error:''})),5000)
-            return false
+      
+         if (!pattern.test(pwd)) {
+            setMessage((mObject) => ({
+               ...mObject,
+               error:
+                  'Password must contain at least one lowercase letter, one uppercase letter, and one digit.',
+            }));
+            setTimeout(() => setMessage((mObject) => ({ ...mObject, error: '' })), 5000);
+            return false;
          }
-        
+      
          return true;
-      }
+      };
+      
 
       if (
          username === "" ||
@@ -77,7 +86,7 @@ const RegisterUser = ({callback}) => {
 
          return;
       }
-      if(!isValidPassword(password)){
+      if(!isPasswordValid(password)){
          return;
       }
 

@@ -32,7 +32,7 @@ function App() {
 
    useEffect(()=>{
       const localUsers = localStorage.getItem('appUsers')
-      // console.log('localUsers::',localUsers)
+     
       if(localUsers){
          setAppUsers(JSON.parse(localUsers))
       }
@@ -47,7 +47,7 @@ function App() {
      const response = await fetch('https://dummyjson.com/products')
      const result = await response.json()
      const dataReturn = result.products
-   //   console.log(dataReturn)
+  
      setProductsApp(dataReturn)
    }
   
@@ -59,7 +59,6 @@ function App() {
    setContextProducts(productsApp)
    setCartItems(cartPassed)
    /**cartProducts */
-   
    
    return (
       <Router basename="/meta-course">
