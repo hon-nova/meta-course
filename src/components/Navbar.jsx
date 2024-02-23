@@ -5,15 +5,18 @@ import { useState, useEffect } from "react";
 
 const Navbar = ({totalItems: propTotalItems}) => {
   
-   const {currentUser,cartItems,setCartItems}=useUser()
+   const {currentUser,cartItems,quantity}=useUser()
      
-   const [len,setLen]=useState(propTotalItems) 
+   const [len,setLen]=useState(quantity) 
+   console.log('quantity::',quantity)
+   
 
-   useEffect(() => {
-      setCartItems(cartItems)
+   useEffect(() => {     
       let countItem = cartItems.reduce((total, {quantity}) => total + quantity, 0);
-      setLen(countItem || propTotalItems); // Use propTotalItems as fallback if countItem is 0
-   }, [cartItems, propTotalItems,setCartItems]);
+
+      setLen(countItem); 
+      console.log('len useEffect:::',len)
+   }, [cartItems, propTotalItems,len]);
    
    return (
       <div>
@@ -30,8 +33,7 @@ const Navbar = ({totalItems: propTotalItems}) => {
                      <span className="material-symbols-outlined">
                         shopping_cart
                      </span>
-                     {len > 0 ? (<sup>{len}</sup>) : (<sup>{propTotalItems}</sup>)}
-                   
+                     {len > 0 || propTotalItems>0? (<sup>{len}</sup>) : (<sup>{len}</sup>)}
                   </Link>
                </li>
                <li>
@@ -42,7 +44,7 @@ const Navbar = ({totalItems: propTotalItems}) => {
                      <option value="">
                         {currentUser ? currentUser.email : ""}
                      </option>
-                     <option value="">
+                     <option value="/profile">
                         <Link to="/profile">My Profile</Link>
                      </option>
                   </select>

@@ -122,6 +122,7 @@ const RegisterUser = ({ callback }) => {
 
                {message.error && <p className="error">{message.error}</p>}
                <form onSubmit={handleSubmit}>
+               <h1 className="store">TechScent</h1>
                   Username:
                   <input
                      type="text"
@@ -158,7 +159,7 @@ const RegisterUser = ({ callback }) => {
                      className="login-input"
                   />
                   <br />
-                  <button type="submit" id="btn-reg">Register</button>
+                  <button type="submit" className="btn-reg">Register</button>
                </form>
             </div>
             <div className="image-right">

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
 // eslint-disable-next-line react/prop-types
@@ -7,12 +8,15 @@ import {useUser} from '../UseContext'
 
 const ProductList = ({ products, callback, cbTotalItem }) => {
    const [cartProducts, setCartProducts] = useState([]);
-   const [totalItems, setTotalItems] = useState(0);
+   const { cartItems,setCartItems,quantity }=useUser()
+   const [totalItems, setTotalItems] = useState(quantity);
    const [message, setMessage] = useState({
       success: "",
       warning: "",
    });
-   const { cartItems,setCartItems }=useUser()
+
+ useEffect(()=>setTotalItems(totalItems),[totalItems])
+ console.log('quan ProductList:::',quantity)
    const handleAdd = (item) => {
       /*  if(!currentUser){
 

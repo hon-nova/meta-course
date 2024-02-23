@@ -6,11 +6,11 @@ const Header = () => {
    const navigateTo = useNavigate()
    return (
       <div className="header-main">
-         <div className="left">left</div>
+         <div className="left"></div>
          <div className="center">
             <LoggedInUser />
             <div className="intro">
-               <h2>Welcome to TechScent Store!</h2>
+               <h2>Welcome to <span id="store">TechScent</span> Store!</h2>
             </div>
             <div className="start">
                <p id='short-intro'>
@@ -24,7 +24,7 @@ const Header = () => {
                
             </div>
          </div>
-         <div className="right">right</div>
+         <div className="right"></div>
       </div>
    );
 };

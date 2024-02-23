@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Header from "./components/Header";
 // import Page from "./components/Page";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -15,10 +16,10 @@ import ForgotPassword from "./components/ForgotPassword";
 
 
 function App() {
+   const {setCartItems,cartItems,quantity,setQuantity}=useUser()
    const [appUsers, setAppUsers]=useState([])
    const [cartPassed,setCartPassed]=useState([])
-   const [totalItems, setTotalItems] = useState(0);
-   const {setCartItems}=useUser()
+   const [totalItems, setTotalItems] = useState(quantity);
 
    const takeCart = (data)=>{
       setCartPassed(data)
@@ -26,13 +27,20 @@ function App() {
    const takeUsers = (data)=>{
      setAppUsers([...appUsers,data])
    }  
-
+console.log('quantityApp:::',quantity)
    const takeTotalItems =(data)=>{
       setTotalItems(data)
-      setCartItems(totalItems)
+      setCartItems(cartItems)
+     setQuantity(data)
    }
+
+   useEffect(()=>{
+      let countItem=cartPassed.reduce((total,{quantity})=>total+quantity,0)     
+      setTotalItems(countItem)
+   },[cartPassed,setQuantity,quantity])
   
    console.log('totalItems::',totalItems)
+   console.log('quantity::',quantity)
  
    useEffect(()=>{
       const localUsers = localStorage.getItem('appUsers')
@@ -41,6 +49,7 @@ function App() {
          setAppUsers(JSON.parse(localUsers))
       }
    },[])
+
    useEffect(()=>localStorage.setItem('appUsers',JSON.stringify(appUsers)),[appUsers])
    // localStorage.clear()
 
@@ -78,7 +87,7 @@ function App() {
             <Route path="/profile" element={<Profile />}/>
             <Route path="/login" element={<LoginUser />}/>
             <Route path="/logout" element={<Logout />}/>
-            <Route path="/cart" element={<Cart cart={cartPassed} totalItems={takeTotalItems}/>}/>
+            <Route path="/cart" element={<Cart cart={cartPassed}/>}/>
             <Route path="/products" element={<ProductList products={productsApp} callback={takeCart} cbTotalItem={takeTotalItems}/>}/>
             <Route path='/forgot-password' element={<ForgotPassword/>}/>
          </Routes>

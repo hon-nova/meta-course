@@ -91,6 +91,7 @@ const LoginUser = () => {
             {message.error && <p className="error">{message.error}</p>}
             {message.success && <p className="success">{message.success}</p>}
                   <form onSubmit={hanldeSubmitLogin}>
+                  <h1 className="store">TechScent</h1>
                      Enter email:{" "}
                      <input
                         type="email"
