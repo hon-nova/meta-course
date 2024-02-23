@@ -109,7 +109,7 @@ const handleSubmitForgotPassword =async(e)=>{
 }
 
    return (
-      <div className="forgot_password">
+      <div className="forgot_password_main">
       <h2>Update Password</h2>
       {message.success && <p className='success'>{message.success}</p>}
       {message.error && <p className='error'>{message.error}</p>}

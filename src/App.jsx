@@ -29,6 +29,7 @@ function App() {
 
    const takeTotalItems =(data)=>{
       setTotalItems(data)
+      setCartItems(totalItems)
    }
   
    console.log('totalItems::',totalItems)

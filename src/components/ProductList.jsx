@@ -12,7 +12,7 @@ const ProductList = ({ products, callback, cbTotalItem }) => {
       success: "",
       warning: "",
    });
-   const { cartItems }=useUser()
+   const { cartItems,setCartItems }=useUser()
    const handleAdd = (item) => {
       /*  if(!currentUser){
 
@@ -57,6 +57,10 @@ const ProductList = ({ products, callback, cbTotalItem }) => {
          cbTotalItem(itemCount)
       }
    }, [cartProducts, cbTotalItem]);
+
+   useEffect(()=>{
+      setCartItems(cartProducts)
+   },[cartItems])
    return (
       <div className="top">
          {message.success && <p className="success">{message.success}</p>}

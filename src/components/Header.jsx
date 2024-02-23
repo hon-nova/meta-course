@@ -1,23 +1,31 @@
 import LoggedInUser from "./LoggedInUser";
-/*
-import {useUser} from '../UseContext'
-import ProductList from './ProductList'; */
+import { useNavigate } from "react-router-dom";
 
-const Header =()=>{
-
+const Header = () => {
    /*const {contextProducts} =useUser()*/
-
+   const navigateTo = useNavigate()
    return (
-      <div>  
-      <h2>Blog Post</h2>
-      <LoggedInUser />
-      {/* <ProductList products={contextProducts}/> */}
-   
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, velit alias deleniti perspiciatis praesentium cupiditate recusandae vitae id ad atque culpa hic molestiae sapiente, cumque, reiciendis nisi quia laudantium! Accusamus.
-       Quis odio odit officia magnam tempora accusamus! Necessitatibus accusantium magni sapiente nisi nostrum totam neque commodi? In repellendus, corrupti, beatae laudantium nesciunt esse iusto architecto animi doloremque, consequuntur eaque aut?
-       Aut, autem! Commodi non placeat quia fugit velit quibusdam praesentium molestias voluptas dolorem vero labore ea est illum itaque animi, perspiciatis cum blanditiis officia deserunt? Veritatis iure libero ipsum eveniet.
-       Iure praesentium dicta, obcaecati facilis doloribus id sapiente, atque, nam deleniti ipsum molestias. Pariatur corporis reiciendis excepturi fugiat consequatur, tenetur suscipit asperiores exercitationem praesentium, similique nobis ab doloremque, iste repellendus.</p>
+      <div className="header-main">
+         <div className="left">left</div>
+         <div className="center">
+            <LoggedInUser />
+            <div className="intro">
+               <h2>Welcome to TechScent Store!</h2>
+            </div>
+            <div className="start">
+               <p id='short-intro'>
+                  There is a comprehensive list of products available for
+                  purchase, organized into categories for easy navigation.The
+                  detailed information about each product encompassing images,
+                  descriptions, prices and its stock availability for your
+                  convenience.
+               </p>
+               <button id="btn-start" onClick={()=>{navigateTo('/products')}}>Let&apos;s start exploring</button>
+               
+            </div>
+         </div>
+         <div className="right">right</div>
       </div>
-   )
-}
-export default Header
+   );
+};
+export default Header;

@@ -59,7 +59,7 @@ const LoginUser = () => {
                setTimeout(() => {
                   setMessage((mObj) => ({ ...mObj, success: "" }));
                   navigateTo('/products')
-               }, 2000);
+               }, 1000);
             } else {
                console.log("Incorrect Password. Try again.");
                setMessage((mObj) => ({
@@ -82,40 +82,51 @@ const LoginUser = () => {
    };
 
    return (
-      <div>
-      {message.error && <p className="error">{message.error}</p>}
-      {message.success && <p className="success">{message.success}</p>}
-         <div className="login">
-            <form onSubmit={hanldeSubmitLogin}>
-               Enter email:{" "}
-               <input
-                  type="email"
-                  name="email"
-                  value={formLogin.email}
-                  onChange={handleInputChange}
-               />
-               <br />
-               Enter password:{" "}
-               <input
-                  type="password"
-                  name="password"
-                  value={formLogin.password}
-                  onChange={handleInputChange}
-               />
-               <br />
-               <div id="login-forgot-pwd">
-               <button type="submit">Login</button>
-               <Link to='/forgot-password'>Forgot Password? </Link>
+      <div className="loginuser-main-container">
+         <div className="left"></div>
+            {message.error && <p className="error">{message.error}</p>}
+            {message.success && <p className="success">{message.success}</p>}
+            <div className="loginuser-center">
+            <div className="login-main">
+                  <form onSubmit={hanldeSubmitLogin}>
+                     Enter email:{" "}
+                     <input
+                        type="email"
+                        name="email"
+                        value={formLogin.email}
+                        onChange={handleInputChange}
+                        className="login-input"
+                     />
+                     <br />
+                     Enter password:{" "}
+                     <input
+                        type="password"
+                        name="password"
+                        value={formLogin.password}
+                        onChange={handleInputChange}
+                        className="login-input"
+                     />
+                     <br />
+                  <div id="login-forgot-pwd">
+                     <button type="submit" id="btn-login">Login</button>
+                     <Link to='/forgot-password' id="btn-reg"><em>Forgot Password? </em></Link>
+                  </div>
+                  </form>
+                  <div className="register">
+                  <p>
+                     Haven&apos;t got an account yet? Register{" "}
+                     <Link to="/register" >here...</Link>
+                  </p>
                </div>
-            </form>
-         </div>
+            </div>
+            <div className="image-right">
+               <img src="https://leadgenapp.io/wp-content/uploads/2023/08/785054-ecommerce-istock-020119.jpg" alt="image-right"/>
+            </div>
+            </div>
+             
+         <div className="left"></div>
 
-         <div className="register">
-            <p>
-               Haven&apos;t got an account yet? Register{" "}
-               <Link to="/register">here...</Link>
-            </p>
-         </div>
+            
       </div>
    );
 };

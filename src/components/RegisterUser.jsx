@@ -111,11 +111,9 @@ const RegisterUser = ({callback}) => {
          setMessage((mObject)=>({...mObject,success:''}))
          setFormInput
          navigateTo('/login')
-      }  
-     
+      }     
       ,1000)
-   };
-  
+   };  
    return (
       <div className="register-main">
          {message.success && <p className="success">{message.success}</p>}
@@ -128,6 +126,7 @@ const RegisterUser = ({callback}) => {
                name="username"
                value={formInput.username}
                onChange={handleInputChange}
+               className="login-input"
             />
             <br />
             Email:
