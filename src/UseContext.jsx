@@ -9,6 +9,7 @@ export const UserProvider = ({children})=>{
    const [currentUser,setCurrentUser]=useState(null)
    const [contextProducts, setContextProducts]=useState([]) 
    const [cartItems,setCartItems]=useState([])
+  
    
  
    

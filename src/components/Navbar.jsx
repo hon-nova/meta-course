@@ -3,19 +3,18 @@ import { Link } from "react-router-dom";
 import { useUser } from "../UseContext";
 import { useState, useEffect } from "react";
 
-const Navbar = ({totalItems}) => {
+const Navbar = ({totalItems: propTotalItems}) => {
   
    const {currentUser,cartItems}=useUser()
-   console.log('cartItems::',cartItems)
+   // console.log('quantity::',quantity)  
 
-   const [len,setLen]=useState(totalItems)
-
-   useEffect(()=>{
-      let countItem=cartItems.reduce((total,{quantity})=>total+quantity,0)
+   const [len,setLen]=useState(propTotalItems)   
+     
+   useEffect(() => { 
       
-      setLen(countItem)
-   },[cartItems,totalItems])
-  
+      setLen(propTotalItems);
+   }, [cartItems, propTotalItems]);
+   
    return (
       <div>
          <nav>
@@ -31,10 +30,10 @@ const Navbar = ({totalItems}) => {
                      <span className="material-symbols-outlined">
                         shopping_cart
                      </span>
-                   {len>0 ? (<sup>{len}</sup>):(<sup>{totalItems}</sup>)}
+                     {/* {len > 0 ? (<sup>{len}</sup>) : (<sup>{propTotalItems}</sup>)} */}
+                     {len>0 ?(<sup>{len}</sup>) :null}
                   </Link>
                </li>
-
                <li>
                   <Link to="/login">Login</Link>
                </li>

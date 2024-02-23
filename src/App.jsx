@@ -13,10 +13,12 @@ import { useUser } from './UseContext'
 import Footer from "./components/Footer";
 import ForgotPassword from "./components/ForgotPassword";
 
+
 function App() {
    const [appUsers, setAppUsers]=useState([])
    const [cartPassed,setCartPassed]=useState([])
    const [totalItems, setTotalItems] = useState(0);
+   const {setCartItems}=useUser()
 
    const takeCart = (data)=>{
       setCartPassed(data)
@@ -59,6 +61,9 @@ function App() {
    let {setContextProducts}=useUser()
    setContextProducts(productsApp)
    
+   useEffect(() => {
+      setCartItems(cartPassed);
+   }, [cartPassed, setCartItems]);
    
    /**cartProducts */
    

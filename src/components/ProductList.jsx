@@ -12,7 +12,7 @@ const ProductList = ({ products, callback, cbTotalItem }) => {
       success: "",
       warning: "",
    });
-   const {cartItems}=useUser()
+   const { cartItems }=useUser()
    const handleAdd = (item) => {
       /*  if(!currentUser){
 
@@ -30,18 +30,19 @@ const ProductList = ({ products, callback, cbTotalItem }) => {
 
       if (existingItemIndex === -1) {
          tempCart.push({ ...item, quantity: 1 });
-         setCartProducts(tempCart);
+        
       } else {
          tempCart[existingItemIndex].quantity++;
-         setCartProducts(tempCart);
+      
          if (tempCart[existingItemIndex].length < 10) {
             alert('max 10')
             return;
          }
       }
+      setCartProducts(tempCart);
 
       if (callback) {
-         callback(tempCart);
+         callback(tempCart);         
       }
    };
    useEffect(() => {  
@@ -56,9 +57,6 @@ const ProductList = ({ products, callback, cbTotalItem }) => {
          cbTotalItem(itemCount)
       }
    }, [cartProducts, cbTotalItem]);
-
-  
-
    return (
       <div className="top">
          {message.success && <p className="success">{message.success}</p>}
