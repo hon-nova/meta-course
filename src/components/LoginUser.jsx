@@ -84,10 +84,12 @@ const LoginUser = () => {
    return (
       <div className="loginuser-main-container">
          <div className="left"></div>
+         
+            <div className="loginuser-center">
+           
+            <div className="login-main">
             {message.error && <p className="error">{message.error}</p>}
             {message.success && <p className="success">{message.success}</p>}
-            <div className="loginuser-center">
-            <div className="login-main">
                   <form onSubmit={hanldeSubmitLogin}>
                      Enter email:{" "}
                      <input
@@ -109,7 +111,7 @@ const LoginUser = () => {
                      <br />
                   <div id="login-forgot-pwd">
                      <button type="submit" id="btn-login">Login</button>
-                     <Link to='/forgot-password' id="btn-reg"><em>Forgot Password? </em></Link>
+                     <Link to='/forgot-password' id="btn-reg"><small><em>Forgot Password?</em></small></Link>
                   </div>
                   </form>
                   <div className="register">
