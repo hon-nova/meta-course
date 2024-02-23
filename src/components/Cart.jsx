@@ -1,19 +1,17 @@
 /* eslint-disable react/prop-types */
-import {useUser} from '../UseContext'
-import { useState, useEffect } from "react";
 
+import { useState, useEffect} from "react";
+import {useUser} from '../UseContext'
 
 const Cart = ({cart}) => {
    const [myCart, setMyCart] = useState(cart || []);
    const [message, setMessage] = useState("");
-   // const [items, setItems] = useState(totalItems);
-
-   const {setCartItems}=useUser()
+  const {setCartItems} = useUser()
    
    const onDecrease = (item) => {
       const foundItemIndex = myCart.findIndex((elem) => elem.id === item.id);
       console.log("foundItem::", foundItemIndex);
-      // console.log('foundItem quantity:::',)
+     
       if (foundItemIndex !== -1) {
          let tempCart = [...myCart];
          if (tempCart[foundItemIndex].quantity > 0) {
@@ -40,23 +38,17 @@ const Cart = ({cart}) => {
             setMessage("Limit: 10");
             setTimeout(() => setMessage(""), 5000);
          }
-
          setMyCart(tempCart);
       }
    };
-
    const onRemove = (index) => {
       let tempCart = [...myCart];
-      tempCart.splice(index, 1);
-      // alert('item deleted')
+      tempCart.splice(index, 1);   
       setMyCart(tempCart);
    };
- 
-   useEffect(()=>{
-      setCartItems(myCart)
-   },[myCart])
- 
 
+   useEffect(()=>setCartItems(myCart),[myCart])
+   
    return (
       <div className="cart">
          {message && <p className="error">{message}</p>}

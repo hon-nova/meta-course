@@ -56,7 +56,6 @@ const RegisterUser = ({callback}) => {
       
          return true;
       };
-      
 
       if (
          username === "" ||

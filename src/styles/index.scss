@@ -39,6 +39,8 @@
 }
 /* Navbar */
 nav {
+  position: fixed;
+  top: 0;
   width: 100%;
   height: 60px;
   background: linear-gradient(rgb(245, 215, 46),rgb(216, 246, 216),#d0d0d5);
@@ -84,6 +86,7 @@ ul {
   display: grid;
   grid-template-columns: 1fr 10fr 1fr;
   border: 5px solid black;
+ 
  
 }
 .products {
@@ -144,6 +147,9 @@ ul {
   height: 40px; 
 }
 /* Cart */
+.cart {
+  margin-top: 30px;
+}
 td {
   border-bottom: 2px solid #d5d5d0;
   padding: 5px;
@@ -174,6 +180,7 @@ td {
 #delete:hover{
   background-color: red;
 }
+
 /* <ForgotPassword/> */
 #login-forgot-pwd {
   display: flex;

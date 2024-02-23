@@ -7,8 +7,10 @@ export const UserProvider = ({children})=>{
    //which variables you want?
 
    const [currentUser,setCurrentUser]=useState(null)
-   const [contextProducts, setContextProducts]=useState([])
+   const [contextProducts, setContextProducts]=useState([]) 
    const [cartItems,setCartItems]=useState([])
+   
+ 
    
    return <UserContext.Provider value={{currentUser,setCurrentUser,contextProducts,setContextProducts,cartItems,setCartItems}}>{children}</UserContext.Provider>
 }
