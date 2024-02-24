@@ -6,7 +6,7 @@
 import { useState, useEffect } from "react";
 import {useUser} from '../UseContext'
 
-const ProductList = ({ products, callback, cbTotalItem }) => {
+const ProductList = ({ products, callback, cbTotalItem,handleSelectChange }) => {
    const [cartProducts, setCartProducts] = useState([]);
    const { cartItems,setCartItems,quantity }=useUser()
    const [totalItems, setTotalItems] = useState(quantity);
@@ -63,27 +63,30 @@ const ProductList = ({ products, callback, cbTotalItem }) => {
    }, [cartProducts, cbTotalItem]);
 
    useEffect(()=>{
-      setCartItems(cartProducts)
+      // setCartItems(cartProducts)
    },[cartItems])
+
+   const categoryArr=[...new Set(products.map(product => product.category))]
+   // console.log('categoryArr:::',categoryArr)
    return (
       <div className="top">
          {message.success && <p className="success">{message.success}</p>}
          {message.warning && <p className="warning">{message.warning}</p>}
          <div className="products-container">
-            <div className="left"></div>
+            <div className="left">
+                 <select onChange={handleSelectChange} id="select-category">
+               <option value="all">All</option>
+               {categoryArr && categoryArr.map(cate=>
+                  <option value={cate} key={cate}>{cate}</option>
+               )}
+              
+            </select>
+            </div>
+          
             <div className="products">
                {products &&
-                  products.map((item) => {
-                     let {
-                        id,
-                        title,
-                        description,
-                        price,
-                        discountPercentage,
-                        stock,
-                        category,
-                        thumbnail,
-                     } = item;
+                  products.map((item) => {  
+                     let {id,thumbnail,title,price,discountPercentage,description,stock,category}=item              
                      return (
                         <li key={id}>
                            <div className="product-card">
@@ -123,60 +126,7 @@ const ProductList = ({ products, callback, cbTotalItem }) => {
             </div>
             <div className="right"></div>
          </div>
-         <div className="products-container">
-            <div className="left"></div>
-            <div className="products">
-               {products &&
-                  products.map((item) => {
-                     let {
-                        id,
-                        title,
-                        description,
-                        price,
-                        discountPercentage,
-                        stock,
-                        category,
-                        thumbnail,
-                     } = item;
-                     return (
-                        <li key={id}>
-                           <div className="product-card">
-                              <p>
-                                 <img
-                                    src={thumbnail}
-                                    alt="product"
-                                    id="product-img"
-                                 />
-                              </p>
-                              <p>id: {id}</p>
-                              <p>{title}</p>
-                              <h3>Price: ${price}</h3>
-                              <p>Discount Percent: {discountPercentage}%</p>
-                              <p>
-                                 <em>Details: {description}</em>
-                              </p>
-                              <p>In stock: {stock}</p>
-                              <p>
-                                 <em>Category:</em>{" "}
-                                 <span id="category">{category}</span>
-                              </p>
-                              <div id="btn-add">
-                                 <button
-                                    onClick={() => {
-                                       handleAdd(item);
-                                    }}
-                                    id="click-add"
-                                 >
-                                    Add to Cart
-                                 </button>
-                              </div>
-                           </div>
-                        </li>
-                     );
-                  })}
-            </div>
-            <div className="right"></div>
-         </div>
+       
       </div>
    );
 };

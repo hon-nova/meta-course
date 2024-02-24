@@ -55,6 +55,7 @@ console.log('quantityApp:::',quantity)
 
    /**Products Part */
    const [productsApp,setProductsApp]=useState([])
+   const [filteredProducts,setFilteredProducts]=useState([])
    
    const fetchProducts= async ()=>{
      const response = await fetch('https://dummyjson.com/products')
@@ -62,17 +63,30 @@ console.log('quantityApp:::',quantity)
      const dataReturn = result.products
   
      setProductsApp(dataReturn)
+     setFilteredProducts(dataReturn)
    }
   
    useEffect(()=>{
      fetchProducts()
    },[])
 
+   const handleSelectChange =(e)=>{
+      let selectedCategory=e.target.value
+      let filtered =productsApp.filter(elem=>elem.category===selectedCategory)
+      
+      console.log('filtered:::',filtered)
+      if(selectedCategory==='all'){
+         setFilteredProducts(productsApp)
+      } else {
+          setFilteredProducts(filtered)
+   }
+      }
+
    let {setContextProducts}=useUser()
-   setContextProducts(productsApp)
+   // setContextProducts(productsApp)
    
    useEffect(() => {
-      setCartItems(cartPassed);
+      // setCartItems(cartPassed);
    }, [cartPassed, setCartItems]);
    
    /**cartProducts */
@@ -88,7 +102,7 @@ console.log('quantityApp:::',quantity)
             <Route path="/login" element={<LoginUser />}/>
             <Route path="/logout" element={<Logout />}/>
             <Route path="/cart" element={<Cart cart={cartPassed}/>}/>
-            <Route path="/products" element={<ProductList products={productsApp} callback={takeCart} cbTotalItem={takeTotalItems}/>}/>
+            <Route path="/products" element={<ProductList products={filteredProducts} callback={takeCart} cbTotalItem={takeTotalItems} handleSelectChange={handleSelectChange}/>}/>
             <Route path='/forgot-password' element={<ForgotPassword/>}/>
          </Routes>
         <Footer/>
