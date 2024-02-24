@@ -20,7 +20,8 @@ const ForgotPassword = () => {
    }
 
    const handleDisabledButton=()=>{
-      setDisabledButton(!handleKeyUp)
+      let areInputsWeighted=handleKeyUp()
+      setDisabledButton(!areInputsWeighted)
    }
 
    const navigateTo = useNavigate();
@@ -138,6 +139,7 @@ const ForgotPassword = () => {
                      name="email"
                      value={forgotPwdForm.email}
                      onChange={handleInputChange}
+                     onKeyUp={handleDisabledButton}
                      className="login-input"
                   />
                   <br />
@@ -147,6 +149,7 @@ const ForgotPassword = () => {
                      name="password"
                      value={forgotPwdForm.password}
                      onChange={handleInputChange}
+                     onKeyUp={handleDisabledButton}
                      className="login-input"
                   />
                   <br />
@@ -156,14 +159,14 @@ const ForgotPassword = () => {
                      name="confirm_password"
                      value={forgotPwdForm.confirm_password}
                      onChange={handleInputChange}
+                     onKeyUp={handleDisabledButton}
                      className="login-input"
                   />
                   <br />
                   <div id="submit_password">
                      <button type="submit" className="btn-submit"
                      disabled={disabledButton}
-                     onClick={handleDisabledButton}
-                     onKeyUp={handleKeyUp}
+                   
                      >Submit</button>
                   </div>
                </form>

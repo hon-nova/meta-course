@@ -40,7 +40,8 @@ const RegisterUser = ({ callback }) => {
       );
    };
    const handleDisabledButton = () => {
-      setButtonDisabled(!handleKeyUp);
+      const areInputWeighted=handleKeyUp()
+      setButtonDisabled(!areInputWeighted);
    };
 
    const handleSubmit = async (e) => {
@@ -132,6 +133,7 @@ const RegisterUser = ({ callback }) => {
                      name="username"
                      value={formInput.username}
                      onChange={handleInputChange}
+                     onKeyUp={handleDisabledButton}
                      className="login-input"
                   />
                   <br />
@@ -141,6 +143,7 @@ const RegisterUser = ({ callback }) => {
                      name="email"
                      value={formInput.email}
                      onChange={handleInputChange}
+                     onKeyUp={handleDisabledButton}
                      className="login-input"
                   />
                   <br />
@@ -150,6 +153,7 @@ const RegisterUser = ({ callback }) => {
                      name="password"
                      value={formInput.password}
                      onChange={handleInputChange}
+                     onKeyUp={handleDisabledButton}
                      className="login-input"
                   />
                   <br />
@@ -159,15 +163,15 @@ const RegisterUser = ({ callback }) => {
                      name="confirm_password"
                      value={formInput.confirm_password}
                      onChange={handleInputChange}
+                     onKeyUp={handleDisabledButton}
                      className="login-input"
                   />
                   <br />
                   <button
                      type="submit"
                      className="btn-submit"
-                     disabled={buttonDisabled}
-                     onClick={handleDisabledButton}
-                     onKeyUp={handleKeyUp}
+                     disabled={buttonDisabled}                   
+                     
                   >
                      Register
                   </button>

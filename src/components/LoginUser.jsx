@@ -23,7 +23,8 @@ const LoginUser = () => {
    };
 
    const handleDisabledButton = () => {
-      setButtonDisabled(!handleKeyUp);
+      let areInputsWeight = handleKeyUp();
+      setButtonDisabled(!areInputsWeight);
    };
 
    const handleInputChange = (e) => {
@@ -115,6 +116,7 @@ const LoginUser = () => {
                      name="email"
                      value={formLogin.email}
                      onChange={handleInputChange}
+                     onKeyUp={handleDisabledButton}
                      className="login-input"
                   />
                   <br />
@@ -124,6 +126,7 @@ const LoginUser = () => {
                      name="password"
                      value={formLogin.password}
                      onChange={handleInputChange}
+                     onKeyUp={handleDisabledButton}
                      className="login-input"
                   />
                   <br />
@@ -134,7 +137,7 @@ const LoginUser = () => {
                         // id="btn-login"
                         disabled={buttonDisabled}
                         onClick={handleDisabledButton}
-                        onKeyUp={handleKeyUp}
+                        
                      >
                         Login
                      </button>
