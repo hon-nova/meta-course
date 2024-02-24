@@ -12,6 +12,16 @@ const ForgotPassword = () => {
       error: "",
       success: "",
    });
+   const [disabledButton,setDisabledButton]=useState(true)
+
+   const handleKeyUp =() =>{
+      let {email,password,confirm_password}=forgotPwdForm
+      return email.length>0 && password.length>0 && confirm_password.length>0
+   }
+
+   const handleDisabledButton=()=>{
+      setDisabledButton(!handleKeyUp)
+   }
 
    const navigateTo = useNavigate();
    const saltV = 10;
@@ -150,7 +160,11 @@ const ForgotPassword = () => {
                   />
                   <br />
                   <div id="submit_password">
-                     <button type="submit" className="btn-reg">Submit</button>
+                     <button type="submit" className="btn-submit"
+                     disabled={disabledButton}
+                     onClick={handleDisabledButton}
+                     onKeyUp={handleKeyUp}
+                     >Submit</button>
                   </div>
                </form>
             </div>

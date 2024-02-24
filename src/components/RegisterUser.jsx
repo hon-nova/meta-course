@@ -2,8 +2,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuid } from "uuid";
-
 import bcrypt from "bcryptjs";
+
 const RegisterUser = ({ callback }) => {
    const [formInput, setFormInput] = useState({
       username: "",
@@ -18,6 +18,8 @@ const RegisterUser = ({ callback }) => {
    });
    const navigateTo = useNavigate();
 
+   const [buttonDisabled, setButtonDisabled] = useState(true);
+
    const saltV = 10;
 
    const handleInputChange = (e) => {
@@ -28,8 +30,22 @@ const RegisterUser = ({ callback }) => {
          [name]: value,
       }));
    };
+   const handleKeyUp = () => {
+      let { username, email, password, confirm_password } = formInput;
+      return (
+         username.length > 0 &&
+         email.length > 0 &&
+         password.length > 0 &&
+         confirm_password.length > 0
+      );
+   };
+   const handleDisabledButton = () => {
+      setButtonDisabled(!handleKeyUp);
+   };
+
    const handleSubmit = async (e) => {
       e.preventDefault();
+
       setFormInput({});
       let { username, email, password, confirm_password } = formInput;
       const isPasswordValid = (pwd) => {
@@ -38,7 +54,7 @@ const RegisterUser = ({ callback }) => {
          if (pwd.length < 8) {
             setMessage((mObject) => ({
                ...mObject,
-               error: "Password is weak. It must be at least 8 characters long.",
+               error: "Password is weak. ",
             }));
             setTimeout(
                () => setMessage((mObject) => ({ ...mObject, error: "" })),
@@ -61,20 +77,7 @@ const RegisterUser = ({ callback }) => {
 
          return true;
       };
-
-      if (
-         username === "" ||
-         email === "" ||
-         password === "" ||
-         confirm_password === ""
-      ) {
-         setMessage((mObject) => ({
-            ...mObject,
-            error: "Please fill out all fields.",
-         }));
-         setTimeout(() => setMessage(""), 2000);
-         return;
-      }
+     
       if (password !== confirm_password) {
          setMessage((mObject) => ({
             ...mObject,
@@ -122,7 +125,7 @@ const RegisterUser = ({ callback }) => {
 
                {message.error && <p className="error">{message.error}</p>}
                <form onSubmit={handleSubmit}>
-               <h1 className="store">TechScent</h1>
+                  <h1 className="store">TechScent</h1>
                   Username:
                   <input
                      type="text"
@@ -159,13 +162,22 @@ const RegisterUser = ({ callback }) => {
                      className="login-input"
                   />
                   <br />
-                  <button type="submit" className="btn-reg">Register</button>
+                  <button
+                     type="submit"
+                     className="btn-submit"
+                     disabled={buttonDisabled}
+                     onClick={handleDisabledButton}
+                     onKeyUp={handleKeyUp}
+                  >
+                     Register
+                  </button>
                </form>
             </div>
             <div className="image-right">
                <img
                   src="https://neilpatel.com/wp-content/uploads/2015/04/ecommerce.jpg"
-                  alt="img-right" id="reg-image"
+                  alt="img-right"
+                  id="reg-image"
                />
             </div>
          </div>
