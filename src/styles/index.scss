@@ -39,9 +39,9 @@
 @media (max-width: 599px){
   body {
     background-color: green;
-    nav ul  {
-      flex-direction: column;
-      margin-right: 0;     
+    nav ul  {      
+      flex-wrap: wrap;
+      flex-direction: column;         
     }
   }
 }

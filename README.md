@@ -7,5 +7,6 @@ The website showcases 30 products which are fetched from a public API.
 - User can modify their personal profile on the website
 - User can update their password in case the password was not recalled
 ## 2. Preview
+![welcome-page](src/assets//preview1.png)
 ## 3. Visit the webpage here
 [e-commerce website](https://hon-nova.github.io/meta-course)

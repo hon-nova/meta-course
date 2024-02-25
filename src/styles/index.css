@@ -41,8 +41,8 @@
     background-color: green;
   }
   body nav ul {
+    flex-wrap: wrap;
     flex-direction: column;
-    margin-right: 0;
   }
 }
 .user-login {
