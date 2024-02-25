@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import { useUser } from "../UseContext";
 import { useState, useEffect } from "react";
 
-const Navbar = ({totalItems: propTotalItems}) => {
+const Navbar = ({totalItems}) => {
   
-   const {currentUser,cartItems,quantity}=useUser()
+   const {currentUser,cartItems}=useUser()
      
-   const [len,setLen]=useState(quantity) 
-   console.log('quantity::',quantity)
+   const [len,setLen]=useState(totalItems) 
+   // console.log('quantity::',quantity)
    
 
    useEffect(() => {     
@@ -16,7 +16,7 @@ const Navbar = ({totalItems: propTotalItems}) => {
 
       setLen(countItem); 
       console.log('len useEffect:::',len)
-   }, [cartItems, propTotalItems,len]);
+   }, [cartItems, totalItems,len]);
    
    return (
       <div>
@@ -33,13 +33,13 @@ const Navbar = ({totalItems: propTotalItems}) => {
                      <span className="material-symbols-outlined">
                         shopping_cart
                      </span>
-                     {len > 0 || propTotalItems>0? (<sup>{len}</sup>) : (<sup>{len}</sup>)}
+                     {totalItems>0 | len>0? (<sup>{len}</sup>) : (<sup>{len}</sup>)}
                   </Link>
                </li>
                <li>
                   <Link to="/login">Login</Link>
                </li>
-               <li>
+               
                   <select>
                      <option value="">
                         {currentUser ? currentUser.email : ""}
@@ -47,8 +47,7 @@ const Navbar = ({totalItems: propTotalItems}) => {
                      <option value="/profile">
                         <Link to="/profile">My Profile</Link>
                      </option>
-                  </select>
-               </li>
+                  </select>               
                <li>
                   <Link to="/logout">Logout</Link>
                </li>

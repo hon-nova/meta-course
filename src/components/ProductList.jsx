@@ -70,9 +70,13 @@ const ProductList = ({ products, callback, cbTotalItem,handleSelectChange }) => 
    // console.log('categoryArr:::',categoryArr)
    return (
       <div className="top">
+      
          {message.success && <p className="success">{message.success}</p>}
          {message.warning && <p className="warning">{message.warning}</p>}
+
+         <h1 id="productList">ALL PRODUCTS FOR THIS SEASON.</h1>
          <div className="products-container">
+         
             <div className="left">
                  <select onChange={handleSelectChange} id="select-category">
                <option value="all">All</option>
@@ -84,6 +88,7 @@ const ProductList = ({ products, callback, cbTotalItem,handleSelectChange }) => 
             </div>
           
             <div className="products">
+           
                {products &&
                   products.map((item) => {  
                      let {id,thumbnail,title,price,discountPercentage,description,stock,category}=item              

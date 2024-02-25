@@ -8,7 +8,7 @@ const Header = () => {
       <div className="header-main">
          <div className="left"></div>
          <div className="center">
-            <LoggedInUser />
+            <LoggedInUser />            
             <div className="intro">
                <h2>Welcome to <span id="store">TechScent</span> Store!</h2>
             </div>

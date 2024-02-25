@@ -82,8 +82,18 @@ console.log('quantityApp:::',quantity)
    }
       }
 
-   let {setContextProducts}=useUser()
-   // setContextProducts(productsApp)
+   useEffect(()=>{
+     
+      let itemCount=cartPassed.reduce((total,{quantity})=>total+quantity,0)
+      setQuantity(itemCount)
+      setCartItems(cartPassed)
+   },[cartPassed])
+
+        
+   // useEffect(()=>{
+   //    let itemCount=cartItems.reduce((total,{quantity})=>total+quantity,0)
+   //    setQuantity(itemCount)
+   // },[cartItems])
    
    useEffect(() => {
       // setCartItems(cartPassed);
@@ -93,7 +103,7 @@ console.log('quantityApp:::',quantity)
    
    return (
       <Router basename="/meta-course">
-         <Navbar totalItems={totalItems}/>
+         <Navbar totalItems={quantity}/>
          
          <Routes>
          <Route path="/" element={<Header/>}/>

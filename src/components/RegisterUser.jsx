@@ -91,7 +91,6 @@ const RegisterUser = ({ callback }) => {
       if (!isPasswordValid(password)) {
          return;
       }
-
       const hashedPassword = await bcrypt.hash(password, saltV);
 
       console.log("passwordH:::", hashedPassword);
@@ -170,8 +169,7 @@ const RegisterUser = ({ callback }) => {
                   <button
                      type="submit"
                      className="btn-submit"
-                     disabled={buttonDisabled}                   
-                     
+                     disabled={buttonDisabled} 
                   >
                      Register
                   </button>
