@@ -31,6 +31,20 @@
     background-color: #f9f9f9;
   }
 }
+@media (min-width: 600px){
+  body{
+    background-color: #ffffff;
+  }
+}
+@media (max-width: 599px){
+  body {
+    background-color: green;
+    nav ul  {
+      flex-direction: column;
+      margin-right: 0;     
+    }
+  }
+}
 
 //  LoggedInUser
 .user-login {
